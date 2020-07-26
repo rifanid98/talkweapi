@@ -34,35 +34,7 @@ const errorMessage = require("../helpers/myErrorMessage");
  */
 
 async function register(req, res) {
-	try {
-		const body = req.body;
-		const error = await validate.validateRegister(body);
-
-		const checkData = await authModel.getDataByName(body.username);
-		console.log(checkData);
-
-		if (checkData < 1) {
-			if (req.file === undefined) {
-				// set default file when no image to upload
-				body.image = `${config.imageUrlPath(req)}avatar.png`;
-			}
-
-			const salt = bcrypt.genSaltSync(10);
-			const hash = bcrypt.hashSync(body.password, salt);
-			body.password = hash;
-			body.role = 3;
-
-			const result = await authModel.register(body);
-			delete body.password;
-			return myResponse.response(res, "success", body, 201, "Created!");
-		} else {
-			const message = `duplicate data. ${body.username} is exists`;
-			return myResponse.response(res, "failed", "", 409, message);
-		}
-	} catch (error) {
-		console.log(error);
-		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
-	}
+	// directed into usersController.postUser
 }
 
 async function login(req, res) {
