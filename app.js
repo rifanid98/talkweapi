@@ -96,7 +96,7 @@ app.use(`/${config.rootProjectPath}`, express.static("src/assets/"));
 // Load routes
 const routes = require('./src/routes/r_index');
 // set the routes
-app.use(`/${config.rootProjectPath}`, routes);
+app.use(`/${config.rootProjectPath}/api/v1`, routes);
 
 /**============================= URLs ============================= */
 
