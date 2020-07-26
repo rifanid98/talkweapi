@@ -1,0 +1,31 @@
+{
+    "name": "talkweapi",
+    "version": "1.0.0",
+    "description": "talkweapi",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "chat",
+        "api",
+        "talk",
+	"talkwe"
+    ],
+    "author": "Adnin Rifandi",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.0.0",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "joi": "^14.3.1",
+        "jsonwebtoken": "^8.5.1",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2",
+        "mysql": "^2.18.1",
+        "socket.io": "^2.3.0"
+    }
+}
