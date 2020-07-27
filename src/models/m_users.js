@@ -14,7 +14,8 @@ const myHelpers = require('../helpers/myHelpers');
  * CRUD
  */
 async function getData(filters, totalData, fields) {
-  const query = myHelpers.createQuery(filters, totalData, fields)
+  const sqlQuery = "SELECT * FROM `users` ";
+  const query = myHelpers.createQuery(sqlQuery, filters, totalData, fields)
   return new Promise((resolve, reject) => {
     conn.query(query.sqlQuery, function (error, result) {
       if (error) {
