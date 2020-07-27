@@ -36,12 +36,12 @@ module.exports = {
     
     return result;
   },
-  createQuery: function (filters, totalData, fields) {
+  createQuery: function (query, filters, totalData, fields) {
     const search = filters.search;
     const filter = filters.filter;
     const sort = filters.sort;
     const pagination = filters.pagination;
-    let sqlQuery = "SELECT * FROM `users` ";
+    let sqlQuery = query;
 
     // search
     if (Object.keys(search).length > 0) {
@@ -59,17 +59,18 @@ module.exports = {
     }
 
     // sort
+    const defaultField = Object.keys(fields);
     if (Object.keys(sort).length > 0 && (sort.sort_by && sort.sort_type)) {
       sqlQuery += " ORDER BY " + sort.sort_by;
       sqlQuery += sort.sort_type === 'asc' ? ' ASC' : ' DESC';
     } else if (Object.keys(sort).length === 1) {
       if (sort.sort_by && !sort.sort_type) sqlQuery += ` ORDER BY ${sort.sort_by} ASC`;
       if (!sort.sort_by && sort.sort_type) {
-        sqlQuery += ' ORDER BY username';
+        sqlQuery += ' ORDER BY ' + defaultField[1];
         sqlQuery += sort.sort_type === 'asc' ? ' ASC' : ' DESC';
       }
     } else {
-      sqlQuery += ' ORDER BY username ASC'
+      sqlQuery += ' ORDER BY ' + defaultField[1] + ' ASC'
     }
 
     // pagination
@@ -95,6 +96,53 @@ module.exports = {
     return {
       sqlQuery,
       totalPage
+    };
+  },
+  generateFilters: function(filters = {}, fields = {}) {
+    let filter = {};
+    let search = {};
+    let pagination = {};
+    let sort = {};
+
+    // get filter
+    for (field in fields) {
+      // get field name
+      const fieldName = fields[field];
+
+      for (fltr in filters) {
+        // masukin ke filter
+        if (fltr == fieldName) {
+          if (fltr in filter == false) {
+            filter[fltr] = filters[fltr];
+          }
+        }
+      }
+    }
+
+    // get search
+    if (filters.search && filters.search.length > 0) {
+      search.search = filters.search
+    }
+
+    // get pagination
+    if ((filters.page && filters.page > 0) && (filters.limit && filters.limit > 0)) {
+      pagination.page = filters.page;
+      pagination.limit = filters.limit;
+    }
+
+    // get sort
+    if (filters.sort_by && filters.sort_by.length > 0) {
+      sort.sort_by = (filters.sort_by);
+    }
+    if (filters.sort_type && filters.sort_type.length > 0) {
+      sort.sort_type = (filters.sort_type);
+    }
+
+    return {
+      filter,
+      search,
+      pagination,
+      sort
     };
   }
 }
