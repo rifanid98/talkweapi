@@ -9,9 +9,6 @@ const router = express.Router();
 // import multer upload helper
 const upload = require('../helpers/upload');
 
-// import middlewares
-const authMiddleware = require('../middlewares/mdl_auth');
-
 /**
  * Controllers
  */
@@ -35,37 +32,12 @@ router.delete('/:id', usersController.deleteUser);
  * Ext CRUD
  */
 // Get User By ID
-router.get('/:id', usersController.getUsers);
+router.get('/:id', usersController.getUserById);
 // Get User Friends
-router.get('/:id/friends/', usersController.getUsers);
+router.get('/:id/friends/', usersController.getFriendsList);
 // Get User Friends By Status
-router.get('/:id/friends/:status', usersController.getUsers);
+router.get('/:id/friends/:status', usersController.getFriends);
 // Get User Messages
-router.get('/:id/messages/', usersController.getUsers);
-
-
-// /**
-//  * Main CRUD
-//  */
-// // Get All Users
-// router.get('/', authMiddleware.checkRole([3, 2, 1]), usersController.getUsers);
-// // Post a User
-// router.post('/', authMiddleware.checkRole([2, 1]), upload.single('image'), usersController.postUser);
-// // Patch a User
-// router.patch('/:id', authMiddleware.checkRole([2, 1]), upload.single('image'), usersController.patchUser);
-// // Delete a User
-// router.delete('/:id', authMiddleware.checkRole([1]), usersController.deleteUser);
-
-// /**
-//  * Ext CRUD
-//  */
-// // Get User By ID
-// router.get('/:id', authMiddleware.checkRole([3, 2, 1]), usersController.getUsers);
-// // Get User Friends
-// router.get('/:id/friends/', authMiddleware.checkRole([3, 2, 1]), usersController.getUsers);
-// // Get User Friends By Status
-// router.get('/:id/friends/:status', authMiddleware.checkRole([3, 2, 1]), usersController.getUsers);
-// // Get User Messages
-// router.get('/:id/messages/', authMiddleware.checkRole([3, 2, 1]), usersController.getUsers);
+router.get('/:id/messages/', usersController.getUserMessages);
 
 module.exports = router;
