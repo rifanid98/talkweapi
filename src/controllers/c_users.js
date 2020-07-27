@@ -4,6 +4,8 @@
  * Load Model
  */
 const usersModel = require("../models/m_users");
+const friendsModel = require("../models/m_friends");
+const messagesModel = require("../models/m_messages");
 const dbViewsModel = require("../models/m_dbviews");
 
 /**
@@ -85,16 +87,6 @@ function generateFilters(filters = {}, fields = {}) {
 	};
 }
 
-async function getUserById(id = 0) {
-	try {
-		const result = await usersModel.getDataById(id);
-		return result;
-	} catch (error) {
-		console.log(error);
-		return 'error';
-	}
-}
-
 /**
  * CRUD
  */
@@ -105,7 +97,7 @@ async function getUsers(req, res) {
 		const totalData = await usersModel.getTotalData();
 		const generatedFilters = generateFilters(filters, fields);
 		const result = await usersModel.getData(generatedFilters, totalData, fields);
-		if (result.totalPage > 0) {
+		if (result.result > 0) {
 			result.previousPage = req.protocol + '://' + req.get('host') + req.originalUrl;
 			if (req.query.page > 1) result.previousPage = result.previousPage.replace(`page=${req.query.page}`, `page=${parseInt(req.query.page) - 1}`)
 			result.nextPage = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -161,7 +153,7 @@ async function postUser(req, res) {
 
 		const result = await usersModel.addData(body);
 		if (result.affectedRows > 0) {
-			body.user_id = result.insertId;
+			body.id = result.insertId;
 			delete body.password
 			return myResponse.response(res, "success", body, 201, "Created!");
 		} else {
@@ -318,9 +310,73 @@ async function deleteUser(req, res) {
 	}
 }
 
+/**
+ * Another CRUD
+ */
+async function getUserById(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await usersModel.getDataById(id);
+		
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
+async function getFriendsList(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await friendsModel.getDataFriendsList(id);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
+async function getFriendsRequest(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await friendsModel.getDataFriendsRequest(id);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
+async function getFriends(req, res) {
+	const status = req.params.status;
+	switch (status) {
+		case 'pending':
+			getFriendsRequest(req, res)
+	}
+}
+
+async function getUserMessages(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await messagesModel.getDataByFriendId(id);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 module.exports = {
 	postUser,
 	patchUser,
 	deleteUser,
 	getUsers,
+	getUserById,
+	getFriendsList,
+	getFriendsRequest,
+	getFriends,
+	getUserMessages
 }
