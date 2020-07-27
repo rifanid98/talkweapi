@@ -132,6 +132,104 @@ module.exports = {
 			});
 		}
 	},
+	validateFriends: function (user, field = null) {
+		const joiSchema = {
+			user_id1: Joi.number().min(1).required(),
+			user_id2: Joi.number().min(1).required(),
+			status: Joi.number().min(1).required(),
+		};
+
+		if (!field) {
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, joiSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		} else {
+			const dynamicSchema = Object.keys(joiSchema)
+				.filter(key => field.includes(key))
+				.reduce((obj, key) => {
+					obj[key] = joiSchema[key];
+					return obj;
+				}, {});
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, dynamicSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		}
+	},
+	validateMessages: function (user, field = null) {
+		const joiSchema = {
+			friend_id: Joi.number().min(1).required(),
+			message: Joi.string().trim().min(1).required(),
+			message_read: Joi.number().min(1).required(),
+			attachment_id: Joi.number().min(1).required(),
+		};
+
+		if (!field) {
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, joiSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		} else {
+			const dynamicSchema = Object.keys(joiSchema)
+				.filter(key => field.includes(key))
+				.reduce((obj, key) => {
+					obj[key] = joiSchema[key];
+					return obj;
+				}, {});
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, dynamicSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		}
+	},
+	validateAttachments: function (user, field = null) {
+		const joiSchema = {
+			file: Joi.string().trim().min(1).required(),
+		};
+
+		if (!field) {
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, joiSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		} else {
+			const dynamicSchema = Object.keys(joiSchema)
+				.filter(key => field.includes(key))
+				.reduce((obj, key) => {
+					obj[key] = joiSchema[key];
+					return obj;
+				}, {});
+			return new Promise((resolve, reject) => {
+				const error = Joi.validate(user, dynamicSchema);
+
+				if (error.error != null) {
+					reject(myJoiError(error));
+				}
+				resolve();
+			});
+		}
+	},
 	validateRefreshToken: function (userData) {
 		const joiSchema = {
 			tokenRefresh: Joi.string().trim().min(3).required()
