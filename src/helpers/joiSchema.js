@@ -167,10 +167,10 @@ module.exports = {
 	},
 	validateMessages: function (user, field = null) {
 		const joiSchema = {
-			friend_id: Joi.number().min(1).required(),
+			sender_id: Joi.number().min(1).required(),
+			receiver_id: Joi.number().min(1).required(),
 			message: Joi.string().trim().min(1).required(),
-			message_read: Joi.number().min(1).required(),
-			attachment_id: Joi.number().min(1).required(),
+			// attachment_id: Joi.number().min(1).required(),
 		};
 
 		if (!field) {
