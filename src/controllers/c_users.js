@@ -187,7 +187,7 @@ async function patchUser(req, res) {
 
 		// checking if data is exists or not
 		const id = req.params.id;
-		const oldData = await getUserById(id);
+		const oldData = await usersModel.getDataById(id);
 		if (oldData.length < 1) {
 			// delete new image when duplicated data
 			const myRequest = { protocol: req.protocol, host: req.get('host') }
@@ -237,9 +237,11 @@ async function patchUser(req, res) {
 			}
 		}
 
-		const salt = bcrypt.genSaltSync(10);
-		const hash = bcrypt.hashSync(data.password, salt);
-		data.password = hash;
+		if (data.password) {
+			const salt = bcrypt.genSaltSync(10);
+			const hash = bcrypt.hashSync(data.password, salt);
+			data.password = hash;
+		}
 
 		// update the user data
 		const result = await usersModel.updateData(data, id);
@@ -360,7 +362,7 @@ async function getFriends(req, res) {
 async function getUserMessages(req, res) {
 	try {
 		const id = req.params.id;
-		const result = await messagesModel.getDataByFriendId(id);
+		const result = await messagesModel.getDataByUserId(id);
 
 		return myResponse.response(res, "success", result, 200, 'Ok');
 	} catch (error) {
