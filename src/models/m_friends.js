@@ -121,7 +121,7 @@ function getDataFriendsList(id) {
   return new Promise((resolve, reject) => {
     const sqlQuery = `
       SELECT
-        u.id as user_id,
+        u.*,
         f.*
         FROM 
         users AS u,
@@ -138,6 +138,7 @@ function getDataFriendsList(id) {
       if (error) {
         reject(error);
       }
+      result.map(res => delete res.password)
       resolve(result);
     })
   })
