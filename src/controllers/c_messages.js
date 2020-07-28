@@ -140,6 +140,19 @@ async function getMessageById(req, res) {
 	}
 }
 
+async function getConversationsMessage(req, res) {
+	try {
+		const senderID = req.params.senderID;
+		const receiverID = req.params.receiverID;
+		const result = await messagesModel.getDataByUserIds(senderID, receiverID);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 
 module.exports = {
 	postMessage,
@@ -147,4 +160,5 @@ module.exports = {
 	deleteMessage,
 	getMessages,
 	getMessageById,
+	getConversationsMessage
 }
