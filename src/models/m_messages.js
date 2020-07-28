@@ -71,49 +71,6 @@ function deleteData(id) {
 /**
  * Another CRUD
  */
-function getDataById(id) {
-  return new Promise((resolve, reject) => {
-    const sqlQuery = "SELECT * FROM messages WHERE id = ?";
-    conn.query(sqlQuery, id, function (error, result) {
-      if (error) {
-        reject(error);
-      }
-      resolve(result);
-    })
-  })
-}
-
-function getDataByFriendId(id) {
-  return new Promise((resolve, reject) => {
-    const sqlQuery = `
-    SELECT * FROM
-      messages as m 
-    WHERE 
-      m.friend_id = (
-        SELECT 
-          f.id as friend_id 
-        FROM
-          users as u 
-          INNER JOIN 
-          friends as f
-        WHERE 
-          (u.id = f.user_id1 OR u.id = f.user_id2)
-        AND
-          f.status = 1 
-        AND 
-          u.id = ?
-        GROUP BY f.id
-      )
-    `;
-    conn.query(sqlQuery, id, function (error, result) {
-      if (error) {
-        reject(error);
-      }
-      resolve(result);
-    })
-  })
-}
-
 function getFieldsName() {
   return new Promise((resolve, reject) => {
     conn.query(`DESCRIBE messages`, function (error, result) {
@@ -144,6 +101,72 @@ function getTotalData() {
 
 }
 
+function getDataById(id) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = "SELECT * FROM messages WHERE id = ?";
+    conn.query(sqlQuery, id, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+function getDataByUserId(id) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT 
+      u.*,
+      m.*
+    FROM 
+      messages AS m 
+    INNER JOIN 
+      users AS u 
+    ON u.id=m.sender_id 
+    WHERE m.id 
+    IN (
+        SELECT 
+          MAX(id) 
+        FROM 
+        messages AS m 
+        WHERE 
+        m.receiver_id = ?
+        GROUP BY 
+        m.sender_id
+    ) 
+    ORDER BY m.created_at DESC
+    `;
+    conn.query(sqlQuery, id, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+function getDataByUserIds(senderID, receiverID) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT * FROM
+      messages AS m
+    WHERE 
+      (m.sender_id=${senderID} OR m.receiver_id=${senderID})
+    AND
+      (m.sender_id=${receiverID} OR m.receiver_id=${receiverID})  
+    ORDER BY m.id  ASC
+    `;
+    conn.query(sqlQuery, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+
 module.exports = {
   getData,
   addData,
@@ -152,5 +175,6 @@ module.exports = {
   getDataById,
   getFieldsName,
   getTotalData,
-  getDataByFriendId
+  getDataByUserId,
+  getDataByUserIds
 }
