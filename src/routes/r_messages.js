@@ -33,5 +33,7 @@ router.delete('/:id', messagesController.deleteMessage);
  */
 // Get Message By ID
 router.get('/:id', messagesController.getMessageById);
+// Get Conversations By ID
+router.get('/:senderID/:receiverID', messagesController.getConversationsMessage);
 
 module.exports = router;
