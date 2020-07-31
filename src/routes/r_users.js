@@ -39,5 +39,7 @@ router.get('/:id/friends/', usersController.getFriendsList);
 router.get('/:id/friends/:status', usersController.getFriends);
 // Get User Messages
 router.get('/:id/messages/', usersController.getUserMessages);
+// Get New User Messages
+router.get('/:id/messages/new', usersController.getNewUserMessages);
 
 module.exports = router;
