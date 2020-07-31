@@ -51,9 +51,26 @@ async function postMessage(req, res) {
 		await validate.validateMessages(req.body, fieldToPatch);
 
 		const body = req.body;
+		// execute multipleStatements, so the output must be 2 rows
+		// [0] is result of insert statement
+		// [1] is result of select setatement
+		// see messagesModel.addData on m_messages.js file
 		const result = await messagesModel.addData(body);
-		if (result.affectedRows > 0) {
+		if (result[0].affectedRows > 0) {
 			body.id = result.insertId
+			// send message to client
+			req.io.emit('broadcastMessage', {
+				sender_id: parseInt(req.body.sender_id),
+				receiver_id: parseInt(req.body.receiver_id),
+				message: req.body.message
+			});
+			let message = {};
+			await result[1].map(result => message = result);
+			req.io.emit('privateMessage', {
+				sender_id: parseInt(req.body.sender_id),
+				receiver_id: parseInt(req.body.receiver_id),
+				message: message
+			});
 			return myResponse.response(res, "success", body, 201, "Created!");
 		} else {
 			const message = `Add data failed`;
@@ -153,6 +170,31 @@ async function getConversationsMessage(req, res) {
 	}
 }
 
+async function getMessageStatus(req, res) {
+	try {
+		const receiverID = req.params.receiverID;
+		const result = await messagesModel.getDataStatus(receiverID);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
+async function setMessageStatus(req, res) {
+	try {
+		const senderID = req.params.senderID;
+		const receiverID = req.params.receiverID;
+		const result = await messagesModel.setDataStatus(senderID, receiverID);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 
 module.exports = {
 	postMessage,
@@ -160,5 +202,7 @@ module.exports = {
 	deleteMessage,
 	getMessages,
 	getMessageById,
-	getConversationsMessage
+	getConversationsMessage,
+	setMessageStatus,
+	getMessageStatus
 }
