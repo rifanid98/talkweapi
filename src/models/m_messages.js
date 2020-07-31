@@ -34,7 +34,7 @@ function getData(filters, totalData, fields) {
 
 function addData(data) {
   return new Promise((resolve, reject) => {
-    const sqlQuery = "INSERT INTO messages SET ?, message_read = 0";
+    const sqlQuery = "INSERT INTO messages SET ?, message_read = 0; SELECT * FROM messages WHERE id = LAST_INSERT_ID()";
     conn.query(sqlQuery, data, function (error, result) {
       if (error) {
         reject(error);
@@ -117,6 +117,53 @@ function getDataByUserId(id) {
   return new Promise((resolve, reject) => {
     const sqlQuery = `
     SELECT 
+      m.*, 
+      u.full_name,
+      u.email,
+      u.image,
+      u.online,
+      u.location
+    FROM 
+      messages m 
+    LEFT JOIN 
+      messages m1 
+    ON 
+    (
+      (
+        (m.sender_id = m1.sender_id AND m.receiver_id = m1.receiver_id) 
+        OR 
+        (m.sender_id = m1.receiver_id and m.receiver_id = m1.sender_id )
+      ) 
+      AND 
+      CASE 
+        WHEN m.created_at = m1.created_at THEN m.id < m1.id 
+        ELSE m.created_at < m1.created_at 
+      END 
+    ) 
+    INNER JOIN 
+      users as u
+    ON 
+      (m.sender_id = u.id OR m.receiver_id = u.id) 
+    WHERE 
+      u.id != ? 
+    AND 
+    m1.id is null 
+    AND ? IN(m.sender_id, m.receiver_id) 
+    ORDER BY m.created_at DESC
+    `;
+    conn.query(sqlQuery, [id, id], function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+function getNewDataByUserId(id) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT 
       u.*,
       m.*
     FROM 
@@ -135,6 +182,8 @@ function getDataByUserId(id) {
         GROUP BY 
         m.sender_id
     ) 
+    AND
+    m.message_read = 0
     ORDER BY m.created_at DESC
     `;
     conn.query(sqlQuery, id, function (error, result) {
@@ -166,6 +215,42 @@ function getDataByUserIds(senderID, receiverID) {
   })
 }
 
+function getDataStatus(receiverID) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT 
+      sender_id, 
+      receiver_id, 
+      COUNT(*) AS total
+    FROM 
+      messages
+    WHERE 
+      message_read = 0
+    AND 
+      receiver_id = ?
+    GROUP BY
+    sender_id,
+    receiver_id`;
+    conn.query(sqlQuery, receiverID, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+function setDataStatus(senderID, receiverID) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = "UPDATE messages SET message_read = 1 WHERE sender_id = ? AND receiver_id = ? AND message_read = 0";
+    conn.query(sqlQuery, [senderID, receiverID], function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
 
 module.exports = {
   getData,
@@ -176,5 +261,8 @@ module.exports = {
   getFieldsName,
   getTotalData,
   getDataByUserId,
-  getDataByUserIds
+  getNewDataByUserId,
+  getDataByUserIds,
+  setDataStatus,
+  getDataStatus
 }
