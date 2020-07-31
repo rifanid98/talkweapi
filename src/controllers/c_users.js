@@ -6,7 +6,6 @@
 const usersModel = require("../models/m_users");
 const friendsModel = require("../models/m_friends");
 const messagesModel = require("../models/m_messages");
-const dbViewsModel = require("../models/m_dbviews");
 
 /**
  * custom response helper
@@ -371,6 +370,18 @@ async function getUserMessages(req, res) {
 	}
 }
 
+async function getNewUserMessages(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await messagesModel.getNewDataByUserId(id);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 module.exports = {
 	postUser,
 	patchUser,
@@ -380,5 +391,6 @@ module.exports = {
 	getFriendsList,
 	getFriendsRequest,
 	getFriends,
-	getUserMessages
+	getUserMessages,
+	getNewUserMessages
 }
