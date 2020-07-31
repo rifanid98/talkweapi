@@ -15,6 +15,7 @@ const conn = mysql.createConnection({
   user: config.mysql.user,
   password: config.mysql.password,
   database: config.mysql.database,
+  multipleStatements: true
 });
 
 module.exports = conn;
