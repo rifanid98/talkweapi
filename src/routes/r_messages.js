@@ -22,9 +22,9 @@ const messagesController = require('../controllers/c_messages');
 // Get All Messages
 router.get('/', messagesController.getMessages);
 // Post a Message
-router.post('/', upload.none(), messagesController.postMessage);
+router.post('/', upload.none('attachment'), messagesController.postMessage);
 // Patch a Message
-router.patch('/:id', upload.none(), messagesController.patchMessage);
+router.patch('/:id', upload.none('attachment'), messagesController.patchMessage);
 // Delete a Message
 router.delete('/:id', messagesController.deleteMessage);
 
@@ -35,5 +35,9 @@ router.delete('/:id', messagesController.deleteMessage);
 router.get('/:id', messagesController.getMessageById);
 // Get Conversations By ID
 router.get('/:senderID/:receiverID', messagesController.getConversationsMessage);
+// Get Unread Message
+router.get('/get/:senderID/:receiverID/', messagesController.getMessageStatus);
+// Set Message Status to 1 (read)
+router.patch('/set/:senderID/:receiverID/', messagesController.setMessageStatus);
 
 module.exports = router;
