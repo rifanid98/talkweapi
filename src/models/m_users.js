@@ -83,6 +83,22 @@ function getDataById(id) {
   })
 }
 
+function getDatasList(id) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT u.*, f.id AS friend_id, f.user_id1 FROM users AS u
+    LEFT JOIN friends AS f
+    ON u.id = f.user_id2
+    AND f.user_id1 = ?`;
+    conn.query(sqlQuery, id, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
 function getDataByName(username) {
   return new Promise((resolve, reject) => {
     const sqlQuery = "SELECT * FROM users WHERE username = ?";
@@ -134,5 +150,6 @@ module.exports = {
   getDataById,
   getDataByName,
   getFieldsName,
-  getTotalData
+  getTotalData,
+  getDatasList
 }
