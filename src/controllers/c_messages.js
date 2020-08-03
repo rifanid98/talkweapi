@@ -59,11 +59,6 @@ async function postMessage(req, res) {
 		if (result[0].affectedRows > 0) {
 			body.id = result.insertId
 			// send message to client
-			req.io.emit('broadcastMessage', {
-				sender_id: parseInt(req.body.sender_id),
-				receiver_id: parseInt(req.body.receiver_id),
-				message: req.body.message
-			});
 			let message = {};
 			await result[1].map(result => message = result);
 			req.io.emit('privateMessage', {
