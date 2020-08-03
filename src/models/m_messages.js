@@ -264,5 +264,5 @@ module.exports = {
   getNewDataByUserId,
   getDataByUserIds,
   setDataStatus,
-  getDataStatus
+  getDataStatus,
 }
