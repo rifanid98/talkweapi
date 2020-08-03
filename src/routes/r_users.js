@@ -33,6 +33,8 @@ router.delete('/:id', usersController.deleteUser);
  */
 // Get User By ID
 router.get('/:id', usersController.getUserById);
+// Get User By ID
+router.get('/:id/list', usersController.getUsersList);
 // Get User Friends
 router.get('/:id/friends/', usersController.getFriendsList);
 // Get User Friends By Status
