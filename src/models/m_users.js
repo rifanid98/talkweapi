@@ -86,11 +86,29 @@ function getDataById(id) {
 function getDatasList(id) {
   return new Promise((resolve, reject) => {
     const sqlQuery = `
-    SELECT u.*, f.id AS friend_id, f.user_id1 FROM users AS u
-    LEFT JOIN friends AS f
-    ON u.id = f.user_id2
-    AND f.user_id1 = ?`;
-    conn.query(sqlQuery, id, function (error, result) {
+    SELECT 
+      u.*,
+      f.id AS friend_id,
+      f.user_id1
+    FROM 
+      users AS u
+    LEFT JOIN 
+      friends AS f 
+    ON
+      (
+        u.id = f.user_id2
+        AND 
+        f.user_id1 = ?
+      )
+    WHERE 
+      (
+        f.id IS NULL
+        AND 
+        u.location_share = 1
+        AND 
+        u.id != ?
+      )`;
+    conn.query(sqlQuery, [id, id], function (error, result) {
       if (error) {
         reject(error);
       }
