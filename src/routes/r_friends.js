@@ -33,5 +33,9 @@ router.delete('/:id', friendsController.deleteFriend);
  */
 // Get Friend By ID
 router.get('/:id', friendsController.getFriendById);
+// Get Friend By ID
+router.get('/:id/request', friendsController.getFriendsRequest);
+// Patch Confirm Friends Request
+router.patch('/:userID/:friendID/:action', friendsController.confirmFriendRequest);
 
 module.exports = router;
