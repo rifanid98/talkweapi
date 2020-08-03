@@ -82,7 +82,24 @@ function getDataById(id) {
     })
   })
 }
-
+function getDataByIds(id1, id2) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    SELECT * FROM 
+      friends AS f 
+    WHERE 
+      (f.user_id1 = ${id1} OR f.user_id2 = ${id1}) 
+    AND
+      (f.user_id1 = ${id2} OR f.user_id2 = ${id2})
+    `;
+    conn.query(sqlQuery, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
 function getDataByUserId(id1, id2) {
   return new Promise((resolve, reject) => {
     const sqlQuery = `
@@ -211,14 +228,20 @@ function getTotalData() {
 }
 
 function updateDataFriendRequest(userID, friendID, action) {
+  const prepareData = {
+    user_id1: userID,
+    user_id2: friendID
+  }
   return new Promise((resolve, reject) => {
     const sqlQuery = `
-    UPDATE friends 
-    SET status = ? 
-    WHERE user_id1 = ? 
-    AND user_id2 = ?
+    UPDATE friends
+    SET status = ?
+    WHERE user_id1 = ?
+    AND user_id2 = ?;
+
+    INSERT INTO friends  SET ?, status = 1
     `;
-    conn.query(sqlQuery, [action, friendID, userID], function (error, result) {
+    conn.query(sqlQuery, [action, friendID, userID, prepareData], function (error, result) {
       if (error) {
         reject(error);
       }
@@ -234,6 +257,7 @@ module.exports = {
   updateData,
   deleteData,
   getDataById,
+  getDataByIds,
   getDataByName,
   getFieldsName,
   getTotalData,
