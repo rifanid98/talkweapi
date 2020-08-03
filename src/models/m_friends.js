@@ -146,22 +146,32 @@ function getDataFriendsList(id) {
 
 function getDataFriendsRequest(id) {
   return new Promise((resolve, reject) => {
+    // const sqlQuery = `
+    //   SELECT
+    //     u.id as user_id,
+    //     f.*
+    //     FROM 
+    //     users AS u,
+    //     friends AS f 
+    //   WHERE 
+    //   (CASE
+    //     WHEN f.user_id1 = ? THEN f.user_id2=u.id
+    //       WHEN f.user_id2 = ? THEN f.user_id1=u.id
+    //   END)
+    //   AND f.status = 0 
+    //   GROUP BY u.id
+    // `;
     const sqlQuery = `
-      SELECT
-        u.id as user_id,
-        f.*
-        FROM 
-        users AS u,
+      SELECT * FROM 
         friends AS f 
-      WHERE 
-      (CASE
-        WHEN f.user_id1 = ? THEN f.user_id2=u.id
-          WHEN f.user_id2 = ? THEN f.user_id1=u.id
-      END)
-      AND f.status = 0 
-      GROUP BY u.id
+      INNER JOIN 
+        users AS u 
+      ON 
+      u.id = f.user_id1
+      AND f.user_id2 = ?
+      AND f.status = 0
     `;
-    conn.query(sqlQuery, [id, id], function (error, result) {
+    conn.query(sqlQuery, id, function (error, result) {
       if (error) {
         reject(error);
       }
@@ -200,6 +210,24 @@ function getTotalData() {
 
 }
 
+function updateDataFriendRequest(userID, friendID, action) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+    UPDATE friends 
+    SET status = ? 
+    WHERE user_id1 = ? 
+    AND user_id2 = ?
+    `;
+    conn.query(sqlQuery, [action, friendID, userID], function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+
 module.exports = {
   getData,
   addData,
@@ -211,5 +239,6 @@ module.exports = {
   getTotalData,
   getDataByUserId,
   getDataFriendsList,
-  getDataFriendsRequest
+  getDataFriendsRequest,
+  updateDataFriendRequest
 }
