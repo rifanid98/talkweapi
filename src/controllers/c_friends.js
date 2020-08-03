@@ -53,7 +53,11 @@ async function postFriend(req, res) {
 		await validate.validateFriends(req.body, fieldToPatch);
 
 		const body = req.body;
-
+		const oldData = await friendsModel.getDataByIds(body.user_id1, body.user_id2);
+		if (oldData.length > 0) {
+			const message = `Duplicate data`;
+			return myResponse.response(res, "failed", "", 409, message);
+		}
 		const result = await friendsModel.addData(body);
 		if (result.affectedRows > 0) {
 			const result = await friendsModel.getDataFriendsRequest(body.user_id2);
@@ -164,17 +168,19 @@ async function getFriendsRequest(req, res) {
 }
 async function confirmFriendRequest(req, res) {
 	try {
+		const body = req.body;
 		const userID = req.params.userID;
 		const friendID = req.params.friendID;
 		const action = req.params.action === 'confirm' ? '1' : '2';
 		const result = await friendsModel.updateDataFriendRequest(userID, friendID, action);
-		if (result.affectedRows > 0) {
+		if (result[0].affectedRows > 0) {
 			req.io.emit('notifications', {
 				sender_id: parseInt(userID),
 				receiver_id: parseInt(friendID),
 				message: 'Your friend request accepted',
 			});
-			return myResponse.response(res, "success", result, 200, 'Ok');
+			body.id = result[0].insertId;
+			return myResponse.response(res, "success", body, 200, 'Ok');
 		} else {
 			const message = `Confirm friend failed`;
 			return myResponse.response(res, "failed", "", 500, message);
