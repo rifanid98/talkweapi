@@ -326,6 +326,18 @@ async function getUserById(req, res) {
 	}
 }
 
+async function getUsersList(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await usersModel.getDatasList(id);
+		
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 async function getFriendsList(req, res) {
 	try {
 		const id = req.params.id;
@@ -388,6 +400,7 @@ module.exports = {
 	deleteUser,
 	getUsers,
 	getUserById,
+	getUsersList,
 	getFriendsList,
 	getFriendsRequest,
 	getFriends,
