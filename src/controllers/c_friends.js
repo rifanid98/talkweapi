@@ -53,15 +53,16 @@ async function postFriend(req, res) {
 		await validate.validateFriends(req.body, fieldToPatch);
 
 		const body = req.body;
-		// const checkFriend = await friendsModel.getDataByUserId(body.user_id1, body.user_id2);
-
-		// if (checkFriend.length > 0) {
-		// 	const message = `Duplicate data ${body.user_id1} and ${body.user_id2}`;
-		// 	return myResponse.response(res, "failed", "", 409, message);
-		// }
 
 		const result = await friendsModel.addData(body);
 		if (result.affectedRows > 0) {
+			const result = await friendsModel.getDataFriendsRequest(body.user_id2);
+			req.io.emit('notifications', {
+				sender_id: parseInt(body.user_id1),
+				receiver_id: parseInt(body.user_id2),
+				message: 'You have new friend request',
+				data: result
+			});
 			body.id = result.insertId
 			return myResponse.response(res, "success", body, 201, "Created!");
 		} else {
@@ -150,6 +151,39 @@ async function getFriendById(req, res) {
 		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
 	}
 }
+async function getFriendsRequest(req, res) {
+	try {
+		const id = req.params.id;
+		const result = await friendsModel.getDataFriendsRequest(id);
+
+		return myResponse.response(res, "success", result, 200, 'Ok');
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+async function confirmFriendRequest(req, res) {
+	try {
+		const userID = req.params.userID;
+		const friendID = req.params.friendID;
+		const action = req.params.action === 'confirm' ? '1' : '2';
+		const result = await friendsModel.updateDataFriendRequest(userID, friendID, action);
+		if (result.affectedRows > 0) {
+			req.io.emit('notifications', {
+				sender_id: parseInt(userID),
+				receiver_id: parseInt(friendID),
+				message: 'Your friend request accepted',
+			});
+			return myResponse.response(res, "success", result, 200, 'Ok');
+		} else {
+			const message = `Confirm friend failed`;
+			return myResponse.response(res, "failed", "", 500, message);
+		}
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
 
 
 module.exports = {
@@ -158,4 +192,6 @@ module.exports = {
 	deleteFriend,
 	getFriends,
 	getFriendById,
+	getFriendsRequest,
+	confirmFriendRequest
 }
