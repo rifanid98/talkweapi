@@ -101,7 +101,7 @@ module.exports = {
 			password: Joi.string().trim().min(3).required(),
 			email: Joi.string().email({ minDomainAtoms: 2 }),
 			role: Joi.number().min(1).max(3).required(),
-			status: Joi.number().min(0).max(1).required(),
+			online: Joi.number().min(0).max(1).required(),
 			location: Joi.string().trim().min(3).required(),
 
 		};
