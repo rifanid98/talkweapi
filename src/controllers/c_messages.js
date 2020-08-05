@@ -182,8 +182,17 @@ async function setMessageStatus(req, res) {
 		const senderID = req.params.senderID;
 		const receiverID = req.params.receiverID;
 		const result = await messagesModel.setDataStatus(senderID, receiverID);
-
-		return myResponse.response(res, "success", result, 200, 'Ok');
+		if (result.affectedRows > 0) {
+			req.io.emit('readMessage', {
+				sender_id: senderID,
+				receiver_id: receiverID,
+				message_read: 1
+			})
+			return myResponse.response(res, "success", result, 200, 'Ok');
+		} else {
+			const message = `Set message status failed`
+			return myResponse.response(res, "Failed", result, 500, message);
+		}
 	} catch (error) {
 		console.log(error);
 		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
