@@ -23,7 +23,7 @@
 2. Start XAMPP
 3. Database configuration:
     - Open http://localhost/phpmyadmin in the browser
-    - Import database, select `libraryapp.sql` file from project folder
+    - Import database, select `talkwe.sql` file from project folder
 4. Start the server:
     - Open root project folder with command line (terminal, linux. cmd, windows. etc.)
     - Type and run this command `npm start` to start the server.
@@ -41,7 +41,7 @@
 
 ## Examples
 
-[How to use](https://github.com/rifanid98/libraryapp-api/blob/master/examples.md)
+[How to use](https://github.com/rifanid98/talkweapi/blob/master/examples.md)
 
 ## Built with
 
@@ -57,4 +57,4 @@
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/rifanid98/libraryapp-api/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/rifanid98/talkweapi/blob/master/LICENSE) file for details
