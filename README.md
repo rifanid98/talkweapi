@@ -1,83 +1,60 @@
-# Project name
+**talkweapi\_** is a simple api endpoint for [talkwe](https://github.com/rifanid98/talkwe) chat application built with Node.js, Express Js as a framework of Node.js and MySQL as a database which has [features](https://github.com/rifanid98/libraryapp-api#features) such as login / register using JWT, pasword hashing, CORS, etc.
 
-<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
+## :memo: Table Of Content
 
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
-![GitHub stars](https://img.shields.io/github/stars/scottydocs/README-template.md?style=social)
-![GitHub forks](https://img.shields.io/github/forks/scottydocs/README-template.md?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/scottydocs?style=social)
-
-Project name is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
-
-Additional line of information text about what the project does. Your introduction should be around 2 or 3 sentences. Don't go overboard, people won't read it.
+-   [Prerequisites](#prerequisites)
+-   [Installation](#installation)
+-   [Features](#features)
+-   [Examples](#examples)
+-   [Built wtih](#features)
+-   [Author](#author)
+-   [License](#license)
 
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+-   NPM or Yarn as package manager.
+-   Node.js installed on the local machine.
+-   MySQL intalled on the local machine (ex. XAMPP)
 
-<!--- These are just example requirements. Add, duplicate or remove as required --->
+## Installation
 
--   You have installed the latest version of `<coding_language/dependency/requirement_1>`
--   You have a `<Windows/Linux/Mac>` machine. State which OS is supported/which is not.
--   You have read `<guide/link/documentation_related_to_project>`.
+1. Clone this repository:
+   `git clone https://github.com/rifanid98/talkweapi`
+2. Start XAMPP
+3. Database configuration:
+    - Open http://localhost/phpmyadmin in the browser
+    - Import database, select `libraryapp.sql` file from project folder
+4. Start the server:
+    - Open root project folder with command line (terminal, linux. cmd, windows. etc.)
+    - Type and run this command `npm start` to start the server.
+    - Make sure there are no other processes that use port 3000
+5. Run app with api testing tools like postman, etc. on http://localhost:3000/talkwe/api/v1/ or using local ip like http://192.168
+   43.88:3000/talkwe/api/v1/ as an example.
 
-## Installing <project_name>
+## Features
 
-To install <project_name>, follow these steps:
+-   [x] CRUD
+-   [x] Search, Sort, Pagination
+-   [x] CORS allowed
+-   [x] Login/Register with JWT
+-   [x] Password hashing
 
-Linux and macOS:
+## Examples
 
-```
-<install_command>
-```
+[How to use](https://github.com/rifanid98/libraryapp-api/blob/master/examples.md)
 
-Windows:
+## Built with
 
-```
-<install_command>
-```
+-   [Node.js](http://nodejs.org/) - JavaScript runtime environment
+-   [Express.js](https://expressjs.com/) - Node.js framework
+-   [MySQL](https://www.mysql.com/) Database
+-   [JWT](https://jwt.io/) - Login/Register authentication
+-   [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) - Password Hashing
 
-## Using <project_name>
+## Author
 
-To use <project_name>, follow these steps:
-
-```
-<usage_example>
-```
-
-Add run commands and examples you think users will find useful. Provide an options reference for bonus points!
-
-## Contributing to <project_name>
-
-<!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-
-To contribute to <project_name>, follow these steps:
-
-1. Fork this repository.
-2. Create a branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
-5. Create the pull request.
-
-Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
-
-## Contributors
-
-Thanks to the following people who have contributed to this project:
-
--   [@scottydocs](https://github.com/scottydocs) 📖
--   [@cainwatson](https://github.com/cainwatson) 🐛
--   [@calchuchesta](https://github.com/calchuchesta) 🐛
-
-You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
-
-## Contact
-
-If you want to contact me you can reach me at <your_email@address.com>.
+-   [Adnin Rifandi Sutanto Putra](https://www.linkedin.com/in/adnin-rifandi-s-5a9135129/)
 
 ## License
 
-<!--- If you're not sure which open license to use see https://choosealicense.com/--->
-
-This project uses the following license: [<license_name>](link).
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/rifanid98/libraryapp-api/blob/master/LICENSE) file for details
