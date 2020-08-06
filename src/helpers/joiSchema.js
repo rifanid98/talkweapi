@@ -102,6 +102,7 @@ module.exports = {
 			email: Joi.string().email({ minDomainAtoms: 2 }),
 			role: Joi.number().min(1).max(3).required(),
 			online: Joi.number().min(0).max(1).required(),
+			status: Joi.string().trim().min(3).required(),
 			location: Joi.string().trim().min(3).required(),
 			location_share: Joi.number().min(0).max(1).required(),
 		};
