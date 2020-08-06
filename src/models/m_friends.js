@@ -139,6 +139,7 @@ function getDataFriendsList(id) {
     const sqlQuery = `
       SELECT
         u.*,
+        u.status AS user_status,
         f.*
         FROM 
         users AS u,
