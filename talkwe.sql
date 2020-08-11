@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `talkwe`
 --
-CREATE DATABASE `talkwe` IF NOT EXISTS;
-USE `talkwe`;
+--- CREATE DATABASE IF NOT EXISTS `talkwe`;
+--- USE `talkwe`;
 -- --------------------------------------------------------
 
 --
