@@ -1,4 +1,4 @@
-**talkweapi\_** is a simple api endpoint for [talkwe](https://github.com/rifanid98/talkwe) chat application built with Node.js, Express Js as a framework of Node.js and MySQL as a database which has [features](https://github.com/rifanid98/libraryapp-api#features) such as login / register using JWT, pasword hashing, CORS, etc.
+**talkweapi** is a simple api endpoint for [talkwe](https://github.com/rifanid98/talkwe) chat application built with Node.js, Express Js as a framework of Node.js and MySQL as a database which has [features](https://github.com/rifanid98/libraryapp-api#features) such as login / register using JWT, pasword hashing, CORS, etc.
 
 ## :memo: Table Of Content
 
