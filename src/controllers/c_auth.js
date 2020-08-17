@@ -55,14 +55,16 @@ async function login(req, res) {
 					image: result[0].image,
 					tokenType: 'login'
 				};
-				const token = jwt.sign(tokenLoginData, config.jwtSecretKey, { expiresIn: config.jwtTokenLoginLifeTime });
+				const token = jwt.sign(tokenLoginData, config.jwtSecretKey);
+				// const token = jwt.sign(tokenLoginData, config.jwtSecretKey, { expiresIn: config.jwtTokenLoginLifeTime });
 				const tokenRefreshData = {
 					user_id: result[0].user_id,
 					role: result[0].role,
 					name: result[0].username,
 					tokenType: 'refresh'
 				};
-				const tokenRefresh = jwt.sign(tokenRefreshData, config.jwtSecretKey, { expiresIn: config.jwtTokenRefreshLifeTime });
+				const tokenRefresh = jwt.sign(tokenRefreshData, config.jwtSecretKey);
+				// const tokenRefresh = jwt.sign(tokenRefreshData, config.jwtSecretKey, { expiresIn: config.jwtTokenRefreshLifeTime });
 				result[0].tokenLogin = token;
 				result[0].tokenRefresh = tokenRefresh;
 

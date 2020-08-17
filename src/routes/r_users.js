@@ -43,5 +43,7 @@ router.get('/:id/friends/:status', usersController.getFriends);
 router.get('/:id/messages/', usersController.getUserMessages);
 // Get New User Messages
 router.get('/:id/messages/new', usersController.getNewUserMessages);
+// Delete User Messages
+router.delete('/:id1/messages/:id2', usersController.deleteUserMessages);
 
 module.exports = router;

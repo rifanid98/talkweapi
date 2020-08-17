@@ -252,6 +252,19 @@ function setDataStatus(senderID, receiverID) {
   })
 }
 
+function deleteDataByUserId(id1, id2) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `DELETE FROM messages WHERE (sender_id=${id1} OR receiver_id=${id1}) AND (sender_id=${id2} OR receiver_id=${id2})`;
+    conn.query(sqlQuery, function (error, result) {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    })
+  })
+}
+
+
 module.exports = {
   getData,
   addData,
@@ -265,4 +278,5 @@ module.exports = {
   getDataByUserIds,
   setDataStatus,
   getDataStatus,
+  deleteDataByUserId
 }

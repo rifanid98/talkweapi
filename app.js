@@ -83,6 +83,9 @@ app.use(bodyParser.json());
  */
 app.use((req, res, next) => {
     req.io = io;
+    io.on('privateMessage', (data) => {
+        console.log(data);
+    })
     next();
 });
 

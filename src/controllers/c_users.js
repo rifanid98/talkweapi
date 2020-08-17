@@ -395,6 +395,24 @@ async function getNewUserMessages(req, res) {
 	}
 }
 
+async function deleteUserMessages(req, res) {
+	try {
+		const id1 = req.params.id1;
+		const id2 = req.params.id2;
+		const result = await messagesModel.deleteDataByUserId(id1, id2);
+		if (result.affectedRows > 0) {
+			req.io.emit('refresh', {});
+			return myResponse.response(res, "success", "", 200, 'Deleted');
+		} else {
+			const message = `Internal Server Error`;
+			return myResponse.response(res, "failed", "", 500, message);
+		}
+	} catch (error) {
+		console.log(error);
+		return myResponse.response(res, "failed", "", 500, errorMessage.myErrorMessage(error, {}));
+	}
+}
+
 module.exports = {
 	postUser,
 	patchUser,
@@ -406,5 +424,6 @@ module.exports = {
 	getFriendsRequest,
 	getFriends,
 	getUserMessages,
-	getNewUserMessages
+	getNewUserMessages,
+	deleteUserMessages
 }
