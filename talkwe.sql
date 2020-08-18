@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2020 at 02:16 AM
+-- Generation Time: Aug 18, 2020 at 02:22 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `talkwe`
 --
-CREATE DATABASE IF NOT EXISTS `shopwe`;
-USE `shopwe`;
+CREATE DATABASE IF NOT EXISTS `talkwe`;
+USE `talkwe`;
 -- --------------------------------------------------------
 
 --
