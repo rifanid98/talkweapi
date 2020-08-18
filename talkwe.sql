@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 07 Agu 2020 pada 14.17
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.5
+-- Generation Time: Aug 18, 2020 at 02:16 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,12 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Database: `talkwe`
 --
---- CREATE DATABASE IF NOT EXISTS `talkwe`;
---- USE `talkwe`;
+CREATE DATABASE IF NOT EXISTS `shopwe`;
+USE `shopwe`;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `attachments`
+-- Table structure for table `attachments`
 --
 
 CREATE TABLE `attachments` (
@@ -36,7 +36,7 @@ CREATE TABLE `attachments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `attachments`
+-- Dumping data for table `attachments`
 --
 
 INSERT INTO `attachments` (`id`, `file`, `created_at`, `updated_at`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `attachments` (`id`, `file`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `friends`
+-- Table structure for table `friends`
 --
 
 CREATE TABLE `friends` (
@@ -58,7 +58,7 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `friends`
+-- Dumping data for table `friends`
 --
 
 INSERT INTO `friends` (`id`, `user_id1`, `user_id2`, `status`, `created_at`, `updated_at`) VALUES
@@ -86,7 +86,7 @@ INSERT INTO `friends` (`id`, `user_id1`, `user_id2`, `status`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `messages`
+-- Table structure for table `messages`
 --
 
 CREATE TABLE `messages` (
@@ -101,7 +101,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `messages`
+-- Dumping data for table `messages`
 --
 
 INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `message_read`, `attachment_id`, `created_at`, `updated_at`) VALUES
@@ -115,18 +115,13 @@ INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `message_re
 (233, 14, 5, 'Saya', 1, NULL, '2020-08-05 07:16:07', '2020-08-05 07:16:08'),
 (234, 14, 5, 'Hai', 1, NULL, '2020-08-05 07:16:29', '2020-08-05 07:16:29'),
 (235, 14, 5, 'Hai', 1, NULL, '2020-08-05 07:16:36', '2020-08-05 07:16:40'),
-(236, 8, 4, 'Good evening', 1, NULL, '2020-08-05 14:37:31', '2020-08-06 16:52:49'),
 (237, 9, 4, 'Are you okay sir? ', 1, NULL, '2020-08-05 14:38:19', '2020-08-05 14:39:22'),
-(238, 4, 6, 'Hei :D', 1, NULL, '2020-08-05 14:39:00', '2020-08-06 02:17:24'),
 (239, 4, 7, 'We have some awesome projects last week...', 1, NULL, '2020-08-05 14:40:08', '2020-08-05 14:42:10'),
 (240, 7, 4, 'Yeah, of course', 1, NULL, '2020-08-05 14:42:34', '2020-08-05 14:43:48'),
 (241, 7, 4, 'Will there be more projects next week?', 1, NULL, '2020-08-05 14:43:39', '2020-08-05 14:43:48'),
 (242, 4, 7, 'Maybe yes', 1, NULL, '2020-08-05 14:44:23', '2020-08-05 14:44:24'),
 (243, 7, 4, 'What is the project about next week?', 1, NULL, '2020-08-05 14:45:25', '2020-08-05 14:45:26'),
 (244, 4, 7, 'Seems to be about a chat application', 1, NULL, '2020-08-05 14:46:16', '2020-08-05 14:46:17'),
-(245, 4, 6, 'hai juga', 1, NULL, '2020-08-06 02:20:04', '2020-08-06 02:20:04'),
-(246, 6, 4, 'apa kabar', 1, NULL, '2020-08-06 02:20:12', '2020-08-06 02:20:12'),
-(247, 4, 6, 'baik, kamu?', 1, NULL, '2020-08-06 02:20:20', '2020-08-06 02:20:20'),
 (248, 17, 6, 'Hai', 1, NULL, '2020-08-06 03:41:11', '2020-08-06 03:41:24'),
 (249, 6, 17, 'Hai juga', 1, NULL, '2020-08-06 03:41:33', '2020-08-06 03:41:33'),
 (250, 17, 6, 'Apa kabar', 1, NULL, '2020-08-06 03:41:47', '2020-08-06 03:41:51');
@@ -134,7 +129,7 @@ INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `message_re
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -153,26 +148,26 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `full_name`, `email`, `password`, `image`, `online`, `status`, `location`, `location_share`, `created_at`, `updated_at`) VALUES
-(4, 'admin', 'admin manager', 'admin@talkwe.com', '$2b$10$GkG9XeGne3Te9JETETsZJ.n7.W1NMM9qK9vd31S3S.YA/PrU/uNXO', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T16:11:14.110ZIMG-20200806-WA0002.jpg', 1, 'Hi there! I\'m using TalkWeeee', '-6.5825761,106.720331', 0, '2020-07-26 17:57:13', '2020-08-06 19:13:12'),
-(5, 'staff', 'staff assistant', 'staff@talkwe.com', '$2b$10$O09TaCKwLysdXvvvvNu/meqmFK29SfsEsf7NPxjz.iEr1UNgIh9Pu', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:17:54.819Z235544.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 0, '2020-07-26 18:56:06', '2020-08-06 13:45:40'),
-(6, 'user', 'user creative banget', 'user@talkwe.com', '$2b$10$5WjQp7KdQUBJniJWvg4Wuubu/YCTQwtwH5gSvYxtmbVjhj6cFDLTG', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:18:19.018Z2422614.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 18:56:22', '2020-08-06 13:45:40'),
-(7, 'adnin', 'adnin rifandi', 'adnin@talkwe.com', '$2b$10$UHmyTImdGcd0o3vdioJb1OJenZjJVRmfvsel3EV594QjDKIssOl06', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:18:43.400Z2422609.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 19:15:46', '2020-08-06 13:45:40'),
-(8, 'rifandi', 'rifandi sutanto', 'rifandi@talkwe.com', '$2b$10$CXPUglsQBuZetDJAD/pyBeHeEMy3.b2ZHQ.wec/8Nn.HyHcizuXcK', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:19:25.669Z2422608.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 19:16:00', '2020-08-06 13:45:40'),
-(9, 'sutanto', 'sutanto putra', 'sutanto@talkwe.com', '$2b$10$jXNGLPD5NIIJFA9gILs1X.3xLe4ULQKGfrCoqPX08ja8kJfNJ/djy', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:19:51.539Z157244.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 19:16:19', '2020-08-06 13:45:40'),
-(10, 'putra', 'putra sanjaya', 'putra@talkwe.com', '$2b$10$GJQIWq14XdMlloyIMcjflOJUcUSTqqbUPUTXWDviLhLcpmujBt5y.', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:13:24.303Z2422630.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 19:16:28', '2020-08-06 13:45:40'),
-(13, 'gamen', 'gamen gamen', 'gamen@gamen.com', '$2b$10$ENv7u7MKftKNexKMtrkbcufJ/LYBJI/93rZKE.zsS6CGk7.hEJcMG', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:21:11.995ZFB_IMG_15927595979202839.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-30 04:13:52', '2020-08-06 13:52:20'),
-(14, 'talkwe', 'Talkwe Talkwe', 'talkwe@talkwe.com', '$2b$10$5rNbLyOuJ3Stqm3FGa8Xcua4ZxVPmbP/dlJaha8fNd.5VpG8RZ7Wy', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:20:13.820Z235539.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 0, '2020-08-05 04:05:59', '2020-08-06 13:45:40'),
-(17, 'mark', 'mark Zuckerberg', 'mark@facebook.com', '$2b$10$OI60FdX6XYaOW9DxK1JUgOuiWONRmofUzQ2bMR6g/hX9shrGUzXZ.', 'http://192.168.43.81:3000/talkwe/images/2020-08-06T12:20:35.091Zdownload.jpeg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 0, '2020-08-06 03:33:38', '2020-08-06 13:45:40');
+(4, 'admin', 'admin manager', 'admin@talkwe.com', '$2b$10$GkG9XeGne3Te9JETETsZJ.n7.W1NMM9qK9vd31S3S.YA/PrU/uNXO', '2020-08-17T12:28:49.652Z2422630.jpg', 0, 'Hi there! I\'m using TalkWeeee', '-6.5850091,106.718262', 0, '2020-07-26 17:57:13', '2020-08-18 00:14:59'),
+(5, 'staff', 'staff assistant', 'staff@talkwe.com', '$2b$10$O09TaCKwLysdXvvvvNu/meqmFK29SfsEsf7NPxjz.iEr1UNgIh9Pu', '2020-08-17T12:29:40.321Z235544.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5874722,106.735163', 0, '2020-07-26 18:56:06', '2020-08-17 12:29:42'),
+(6, 'user', 'user creative banget', 'user@talkwe.com', '$2b$10$5WjQp7KdQUBJniJWvg4Wuubu/YCTQwtwH5gSvYxtmbVjhj6cFDLTG', '2020-08-17T12:29:54.843Z2422614.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5875479,106.7351413', 1, '2020-07-26 18:56:22', '2020-08-17 12:29:56'),
+(7, 'adnin', 'adnin rifandi', 'adnin@talkwe.com', '$2b$10$UHmyTImdGcd0o3vdioJb1OJenZjJVRmfvsel3EV594QjDKIssOl06', '2020-08-17T12:30:12.846Z2422609.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5875482,106.7351412', 1, '2020-07-26 19:15:46', '2020-08-17 12:30:14'),
+(8, 'rifandi', 'rifandi sutanto', 'rifandi@talkwe.com', '$2b$10$CXPUglsQBuZetDJAD/pyBeHeEMy3.b2ZHQ.wec/8Nn.HyHcizuXcK', '2020-08-17T12:30:34.251Z2422608.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5875476,106.7351394', 1, '2020-07-26 19:16:00', '2020-08-17 12:30:35'),
+(9, 'sutanto', 'sutanto putra', 'sutanto@talkwe.com', '$2b$10$jXNGLPD5NIIJFA9gILs1X.3xLe4ULQKGfrCoqPX08ja8kJfNJ/djy', '2020-08-17T12:30:47.987Z157244.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5825761,106.720331', 1, '2020-07-26 19:16:19', '2020-08-17 12:30:49'),
+(10, 'putra', 'putra sanjaya', 'putra@talkwe.com', '$2b$10$GJQIWq14XdMlloyIMcjflOJUcUSTqqbUPUTXWDviLhLcpmujBt5y.', '2020-08-17T12:31:01.796Z235539.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5875672,106.7350479', 1, '2020-07-26 19:16:28', '2020-08-17 12:31:03'),
+(13, 'gamen', 'gamen gamen', 'gamen@gamen.com', '$2b$10$ENv7u7MKftKNexKMtrkbcufJ/LYBJI/93rZKE.zsS6CGk7.hEJcMG', '2020-08-17T12:31:24.240Zdownload.jpeg', 0, 'Hi there! I\'m using TalkWe', '-6.5875476,106.7351394', 1, '2020-07-30 04:13:52', '2020-08-17 12:31:25'),
+(14, 'talkwe', 'Talkwe Talkwe', 'talkwe@talkwe.com', '$2b$10$5rNbLyOuJ3Stqm3FGa8Xcua4ZxVPmbP/dlJaha8fNd.5VpG8RZ7Wy', '2020-08-17T12:31:42.888ZFB_IMG_15927595979202839.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.587559,106.7350477', 0, '2020-08-05 04:05:59', '2020-08-17 12:31:48'),
+(17, 'mark', 'mark Zuckerberg', 'mark@facebook.com', '$2b$10$OI60FdX6XYaOW9DxK1JUgOuiWONRmofUzQ2bMR6g/hX9shrGUzXZ.', '2020-08-17T12:32:07.460Z2422630.jpg', 0, 'Hi there! I\'m using TalkWe', '-6.5875476,106.7351394', 0, '2020-08-06 03:33:38', '2020-08-17 12:32:08');
 
 -- --------------------------------------------------------
 
 --
--- Stand-in struktur untuk tampilan `v_last_message`
--- (Lihat di bawah untuk tampilan aktual)
+-- Stand-in structure for view `v_last_message`
+-- (See below for the actual view)
 --
 CREATE TABLE `v_last_message` (
 `id` int(11)
@@ -188,7 +183,7 @@ CREATE TABLE `v_last_message` (
 -- --------------------------------------------------------
 
 --
--- Struktur untuk view `v_last_message`
+-- Structure for view `v_last_message`
 --
 DROP TABLE IF EXISTS `v_last_message`;
 
@@ -199,13 +194,13 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indeks untuk tabel `attachments`
+-- Indexes for table `attachments`
 --
 ALTER TABLE `attachments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `friends`
+-- Indexes for table `friends`
 --
 ALTER TABLE `friends`
   ADD PRIMARY KEY (`id`),
@@ -213,59 +208,59 @@ ALTER TABLE `friends`
   ADD KEY `user_id2` (`user_id2`);
 
 --
--- Indeks untuk tabel `messages`
+-- Indexes for table `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `attachment_id` (`attachment_id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `attachments`
+-- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `friends`
+-- AUTO_INCREMENT for table `friends`
 --
 ALTER TABLE `friends`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
--- AUTO_INCREMENT untuk tabel `messages`
+-- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=279;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `friends`
+-- Constraints for table `friends`
 --
 ALTER TABLE `friends`
   ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id1`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`user_id2`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `messages`
+-- Constraints for table `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`attachment_id`) REFERENCES `attachments` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
