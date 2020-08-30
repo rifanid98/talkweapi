@@ -83,9 +83,6 @@ app.use(bodyParser.json());
  */
 app.use((req, res, next) => {
     req.io = io;
-    io.on('privateMessage', (data) => {
-        console.log(data);
-    })
     next();
 });
 
@@ -139,7 +136,6 @@ app.use(function (error, req, res, next) {
  * load config mysql
  */
 const conn = require('./src/helpers/mysql');
-const { disconnect } = require('process');
 // connect function
 function connect() {
     conn.connect(function (error) {
@@ -157,6 +153,7 @@ function connect() {
 // prefer to not use socket.io
 const port = process.env.PORT || 3000;
 const host = process.env.HOST;
+server.setMaxListeners(0);
 server.listen(port, host, () => {
     connect();
     console.log("Server is running on port " + port);
