@@ -47,6 +47,7 @@ io.on('connection', socket => {
     // Force socket.io client disconnect
     // socket.disconnect()
 });
+io.setMaxListeners(9999);
 
 /**============================= CORS ============================= */
 
@@ -153,7 +154,6 @@ function connect() {
 // prefer to not use socket.io
 const port = process.env.PORT || 3000;
 const host = process.env.HOST;
-server.setMaxListeners(0);
 server.listen(port, host, () => {
     connect();
     console.log("Server is running on port " + port);

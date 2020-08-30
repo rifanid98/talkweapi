@@ -66,6 +66,8 @@ async function postMessage(req, res) {
 				receiver_id: parseInt(req.body.receiver_id),
 				message: message
 			});
+			console.log(req.io);
+			console.log('after private message');
 			return myResponse.response(res, "success", body, 201, "Created!");
 		} else {
 			const message = `Add data failed`;
